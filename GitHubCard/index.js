@@ -46,6 +46,26 @@ const cardMaker = (cardObject) => {
 	bio.textContent = `Bio: ${cardObject.bio}`;
 	cardInfo.appendChild(bio);
 
+	const githubChart = document.createElement('img');
+	githubChart.src = `http://ghchart.rshah.org/${cardObject.login}`;
+	githubChart.classList.add('github-chart', 'hide-chart');
+	cardDiv.appendChild(githubChart);
+
+	const moreInfo = document.createElement('span');
+	moreInfo.textContent = 'Click card for more info...';
+	moreInfo.classList.add('more-info');
+	cardDiv.appendChild(moreInfo);
+
+	cardDiv.addEventListener('click', () => {
+		githubChart.classList.toggle('hide-chart');
+
+		if (moreInfo.textContent === 'Click card for more info...') {
+			moreInfo.textContent = 'Click card for less info...';
+		} else {
+			moreInfo.textContent = 'Click card for more info...';
+		}
+	});
+
 	return cardDiv;
 };
 
