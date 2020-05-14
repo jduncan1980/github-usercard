@@ -50,35 +50,54 @@ const cardMaker = (cardObject) => {
 };
 
 axios
-	.get('https://api.github.com/users/jduncan1980')
+	.get(
+		'https://cors-anywhere.herokuapp.com/https://api.github.com/users/jduncan1980'
+	)
 	.then((response) => {
 		const newCard = cardMaker(response.data);
 		rootDiv.appendChild(newCard);
-		console.log(response.data);
+		// console.log(response.data);
 	})
 	.catch((err) => {
 		console.log(err, 'HTTP Request Failed');
 	});
 
-const followersArray = [
-	'pvaidya56',
-	'gaearon',
-	'git-moss',
-	'bradtraversy',
-	'andrewjmead',
-];
-
-followersArray.forEach((follower) => {
-	axios
-		.get(`https://api.github.com/users/${follower}`)
-		.then((response) => {
-			const newCard = cardMaker(response.data);
+axios
+	.get(
+		'https://cors-anywhere.herokuapp.com/https://api.github.com/users/jduncan1980/following'
+	)
+	.then((response) => {
+		response.data.forEach((follower) => {
+			const newCard = cardMaker(follower);
 			rootDiv.appendChild(newCard);
-		})
-		.catch((err) => {
-			console.log(err, 'HTTP Request Failed');
 		});
-});
+	})
+	.catch((err) => {
+		console.log(err, 'HTTP Request Failed');
+	});
+
+//https://api.github.com/users/jduncan1980/following{/other_user}
+// const followersArray = [
+// 	'pvaidya56',
+// 	'gaearon',
+// 	'git-moss',
+// 	'bradtraversy',
+// 	'andrewjmead',
+// ];
+
+// followersArray.forEach((follower) => {
+// 	axios
+// 		.get(
+// 			`https://cors-anywhere.herokuapp.com/https://api.github.com/users/${follower}`
+// 		)
+// 		.then((response) => {
+// 			const newCard = cardMaker(response.data);
+// 			rootDiv.appendChild(newCard);
+// 		})
+// 		.catch((err) => {
+// 			console.log(err, 'HTTP Request Failed');
+// 		});
+// });
 
 /*
   STEP 1: using axios, send a GET request to the following URL
